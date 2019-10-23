@@ -30,8 +30,8 @@ while True:
         for i in range(len(digits)):
             encoding += map[digits[i]]
         print()
-        print('Your original number {0} will be '.format(n, 10))
-        print('{0} in base {1}'.format(encoding, b))
+        print('     Original number: {0} in base {1} '.format(n, 10))
+        print('     New representation: {0} in base {1}'.format(encoding, b))
         print()
 
     saida = input("Would like to continue? \nPress any key to continue or 0 to exit: ")
