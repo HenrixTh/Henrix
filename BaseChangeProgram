@@ -1,0 +1,48 @@
+# Simple program to convert a positive number in base 10 to any other base between 2 and 36 inclusive. 
+# Inspired by Python3: Deep Dive course by Fred Baptiste
+# Programa simples que converte um número positivo na base 10 para qualquer outra base entre 2 e 36 inclusas. 
+# Inspirado pelo curso Python3: Deep Dive de Fred Baptiste
+
+
+while True:
+    n = input("Enter a number: ")
+    while not n.isdigit():
+        n = input("Error. Enter a number: ")
+
+    b = input("New base(from 2 to 36): ")
+    while not (b.isdigit() and int(b) >= 2 and int(b) <= 36):
+        b = input("Error. New base(from 2 to 36): ")
+
+    if int(n) == 0:
+        print()
+        print('Number:{0}, base: {1}'.format(n, b))
+    else:
+        n = int(n)
+        b = int(b)
+        n1 = int(n)
+        digits = []
+        map = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        encoding = ''
+        while n1 > 0:
+            n1, m = divmod(n1, b)
+            digits.insert(0, m)
+
+        for i in range(len(digits)):
+            encoding += map[digits[i]]
+        print()
+        print('Your original number {0} will be '.format(n, 10))
+        print('{0} in base {1}'.format(encoding, b))
+        print()
+
+    saida = input("Would like to continue? \nPress any key to continue or 0 to exit: ")
+    try:
+        if int(saida) == 0:
+            print()
+            print("bye, then!")
+            break
+        else:
+            pass
+    except ValueError:
+        pass
+    finally:
+        print()
