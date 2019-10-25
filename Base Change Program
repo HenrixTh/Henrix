@@ -5,9 +5,9 @@
 
 
 while True:
-    n = input("Enter a number: ")
+    n = input("Enter a positive number: ")
     while not n.isdigit():
-        n = input("Error. Enter a number: ")
+        n = input("Error. Enter a positive number: ")
 
     b = input("New base(from 2 to 36): ")
     while not (b.isdigit() and int(b) >= 2 and int(b) <= 36):
@@ -34,7 +34,7 @@ while True:
         print('     New representation: {0} in base {1}'.format(encoding, b))
         print()
 
-    saida = input("Would like to continue? \nPress any key to continue or 0 to exit: ")
+    saida = input("Would like to continue? \nEnter any key to continue or 0 to exit: ")
     try:
         if int(saida) == 0:
             print()
