@@ -1,0 +1,46 @@
+def verification(string):
+    lower_case = string.lower()
+    for i in lower_case:
+        return lower_case
+        
+def conv_str_to_list(string_lowercase):
+    list_ru = []
+    for i in range(len(string_lowercase)):
+        list_ru.append(string_lowercase[i])
+    return list_ru
+
+def encoding(list_rus):
+    list_pt = []
+    for i in list_rus:
+        indice = map_ru.index(i)
+        list_pt.append(map_pt[indice])
+    str_pt = ''.join(list_pt)
+    return str_pt
+
+
+map_ru = ('а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я',' ')
+map_pt = ('a','b','v','g','d','e','io','j','z','i','y','k','l','m','n','o','p','r','s','t','u','f','kh','ts','tch','ch','sch','"','uy',"'",'e','yu','ya',' ')
+
+print("Observações: \n 1ª: ge/gi --> leia 'gue/gui' \n 2ª: kh --> leia com som de 'rr'")
+print()
+while True:
+    erro = 0
+    a = input("Entre com as palavras em russo: ")
+    b = verification(a)
+  
+    c = conv_str_to_list(b)
+   
+    for i in range(len(c)):
+        if c[i] not in map_ru:
+            erro = 1
+    if erro == 1:
+        print("**Somente letras russas e espaços perimitidos!**")
+        print()
+        continue
+    else:
+        d = encoding(c)
+        b = b.upper()
+        d = d.upper()
+        print()
+        print('       {0} ... {1}'.format(b,d))
+        print()
