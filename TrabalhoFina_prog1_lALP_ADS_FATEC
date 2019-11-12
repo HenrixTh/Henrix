@@ -1,0 +1,126 @@
+# Script para cadastrar funcionários e criar um arquivo binário 
+# Há muitas redundâncias pois o trabalho assim pedia =(
+import struct
+
+arquivo = open('arq_func.dat', 'wb')
+
+registro = 0
+erro = 0
+corrige = 0
+cod_fun = 0
+nome_fun = 0
+dia = 0
+mes = 0
+ano = 0
+salario = 0
+meses = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31] 
+
+print("      Cadastro de funcionários \n\n")
+while True:
+    corrige = "s"
+    #Loop de consistência de CÓDIGO
+    while corrige == "s":
+        cod_fun = input("Entre com o código do funcionário: ")
+        if cod_fun == "9999":
+            break
+        if cod_fun.isdigit():
+            cod_fun = int(cod_fun)
+            if cod_fun > 0 :
+                break
+        corrige = 0
+        while corrige != "s" and corrige != "n":
+            corrige = input("Dado inválido. Deseja corrigir(s) ou abandonar(n)? ")
+        if corrige == "n": erro = 1
+    if cod_fun == '9999':
+        print("\nCadastro finalizado!")
+        break
+    
+    #Loop de consistência de NOME
+    while corrige == "s":
+        nome_fun = input("Entre com o nome do funcionário: ")
+        if nome_fun == "":
+            nome_fun = " "
+        if nome_fun[0] in "ABCDEFGHIJKLMNOPQRSTUVXWYZ" and len(nome_fun) <= 30 :
+            break
+        corrige = 0
+        while corrige != "s" and corrige != "n":
+            corrige = input("Dado inválido. Deseja corrigir(s) ou abandonar(n)? ")
+        if corrige == "n": erro = 1
+
+    #Loop de consistência de ANO
+    while corrige == "s":
+        ano = input("Entre com o ano de admissão: ")
+        if ano.isdigit():
+            ano = int(ano)
+            if ano > 0:
+                if ano % 4 == 0 and ano % 100 != 0:
+                    meses[2] = 29
+                elif ano % 400 == 0:
+                    meses[2] = 29
+                break    
+        corrige = 0
+        while corrige != "s" and corrige != "n":
+            corrige = input("Dado inválido. Deseja corrigir(s) ou abandonar(n)? ")
+        if corrige == "n": erro = 1
+
+    #Loop de consistência de MÊS
+    while corrige == "s":
+        mes = input("Entre com o mês de admissão: ")
+        if mes.isdigit():
+            mes = int(mes)
+            if 0 < mes < 13:
+                break    
+        corrige = 0
+        while corrige != "s" and corrige != "n":
+            corrige = input("Dado inválido. Deseja corrigir(s) ou abandonar(n)? ")
+        if corrige == "n": erro = 1
+
+    #Loop de consistência de DIA
+    while corrige == "s":
+        dia = input("Entre com o dia de admissão: ")
+        if dia.isdigit():
+             dia = int(dia)
+             if dia > 0 and dia <= meses[mes]:
+                 break 
+        corrige = 0
+        while corrige != "s" and corrige != "n":
+            corrige = input("Dado inválido. Deseja corrigir(s) ou abandonar(n)? ")
+        if corrige == "n": erro = 1
+                        
+    #Loop de consistência de SALÁRIO
+    while corrige == "s":
+        salario = input("Entre com o salário: ")
+        try:
+            salario = float(salario)
+            if salario > 0 :
+                break
+            else:
+                corrige = 0
+            while corrige != "s" and corrige != "n":
+                corrige = input("Dado inválido. Deseja corrigir(s) ou abandonar(n)? ")
+            if corrige == "n": erro = 1                
+        except:
+            corrige = 0
+            while corrige != "s" and corrige != "n":
+                corrige = input("Dado inválido. Deseja corrigir(s) ou abandonar(n)? ")
+            if corrige == "n": erro = 1
+
+
+    if erro == 0 :
+        registro = struct.pack('i30siiif', cod_fun, nome_fun.encode('ascii'), ano, mes, dia, salario)
+        arquivo.write(registro)
+        print("\n*Funcionário cadastrado com sucesso!* \n\n")
+        cod_fun = 0
+        nome_fun = 0
+        dia = 0
+        mes = 0
+        ano = 0
+        salario = 0
+        
+    if erro == 1 :
+        print("\n*Vamos recomeçar o cadastro...* \n")
+        erro = 0 
+    
+    
+
+arquivo.close()        
