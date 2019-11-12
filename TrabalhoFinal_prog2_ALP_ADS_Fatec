@@ -1,0 +1,35 @@
+# Script abrir o arquivo binário criado em prog1 e exibir os cadastros de funcionários
+
+#!/usr/bin/python3
+#-*- coding: UTF-8 -*-
+
+print("Funcionários cadastrados\n\n")
+import struct
+
+tamanho = len(struct.pack('i30siiif', 0, " ".encode('ascii'), 0, 0, 0, 0.0))
+ref_arquivo = open('arq_func.dat', 'rb')
+inss = 0
+irrf = 0
+sal_liq = 0
+a = ""               
+while a == "":
+    registro = ref_arquivo.read(tamanho)
+    if registro == b"":
+        break
+    (cod_fun, nome_fun, ano, mes, dia, salario) = struct.unpack('i30siiif', registro)
+    inss = float(0.11 * salario)
+    if inss > 615 :
+        inss = 615.00
+    irrf = float((salario - inss) * 0.245)
+    sal_liq = float(salario - inss - irrf)
+    print("Código:  %13d" %(cod_fun))
+    print("Nome:            %-30s" % str(nome_fun, 'ascii').strip('\x00'))
+    print("Data adm.:       {0}/{1}/{2}".format(dia, mes, ano))
+    print("Salário:         R$ %6.2f" % float(salario))
+    print("Valor do INSS:   R$ %6.2f" % float(inss))
+    print("Valor do IRRF:   R$ %6.2f" % float(irrf))
+    print("Salário Líquido: R$ %6.2f" % float(sal_liq))
+    print("")
+    a = input("\nPressione ENTER para exibir o próximo funcionário \n")
+
+ref_arquivo.close
